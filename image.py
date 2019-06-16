@@ -94,7 +94,7 @@ def create_model():
     return model
 
 
-def train_model(model, dataframe):
+def train_model(model, train_frame, valid_frame):
     """
     Fit the model with the dataframe. If no model is provided then load 'model.h5'.
     The model is trained with batches of the inputs whilst augmenting the data
@@ -105,76 +105,49 @@ def train_model(model, dataframe):
         """ Distribute the inputs between [-1.0;1.0] """
         return preprocess_input(image, mode='tf', data_format='channels_last')
 
+    batch_size = 32
     early_stop = EarlyStopping(monitor='mean_squared_error', patience=20,
                                mode='min', restore_best_weights=True)
     csv_logger = CSVLogger('model_history_log.csv')
-    images_gen = TrackGenerator(dataframe, preprocess, 32)
-    VALIDATION_LOG = read_driving_log('validation_log.csv')
-    images_validation = TrackGenerator(VALIDATION_LOG, preprocess, 32)
-    model.fit_generator(images_gen, epochs=15, validation_data=images_validation,
-                        validation_steps=32,
+    images_gen = TrackGenerator(train_frame, preprocess, batch_size)
+    valids_gen = TrackGenerator(valid_frame, preprocess, batch_size)
+    model.fit_generator(generator=images_gen, epochs=15,
+                        validation_steps=batch_size,
+                        validation_data=valids_gen,
                         workers=20, max_queue_size=500,
                         callbacks=[early_stop, csv_logger])
-
     model.save('model.h5')
     print("[INFO] model saved")
 
 
-def read_driving_log(filename):
+def read_driving_log(filename, one_of_five=False):
     """ Returns a dataframe with only the images paths and the steering values """
     column_names = ['Center', 'Left', 'Right', 'Steering',
                     'Accelerator', 'Brake', 'Speed']
     dataset = pd.read_csv(filename, names=column_names)
     dataset = dataset.drop(columns=['Accelerator', 'Brake', 'Speed'])
     dataset['Steering'] = dataset['Steering'].astype(np.float32)
-    # Keep only one out of five frames
-    to_take = range(0, dataset.shape[0], 5)
-    dataset = dataset.take(to_take)
+    if one_of_five:
+        to_take = range(0, dataset.shape[0], 5)
+        dataset = dataset.take(to_take)
     return dataset
 
 
 def plot_history(hist):
     """ Plot the MAE and MSE progress during training with matplotlib. """
-
-    """ MAE """
-
-    plt.subplot(2, 2, 1)
-    plt.xlabel('Batch')
+    plt.subplot(1, 2, 1)
+    plt.xlabel('Epoch')
     plt.ylabel('Mean Abs Error [Steering angle]')
     plt.plot(hist['epoch'], hist['mean_absolute_error'], label='Train Error')
-    # plt.plot(hist['epoch'], hist['val_mean_absolute_error'], label='Val Error')
+    plt.plot(hist['epoch'], hist['val_mean_absolute_error'], label='Val Error')
     plt.legend()
 
-    """ MSE """
-
-    plt.subplots_adjust(wspace=0.3)
-    plt.subplot(2, 2, 2)
-    plt.xlabel('Batch')
+    plt.subplot(1, 2, 2)
+    plt.xlabel('Epoch')
     plt.ylabel('Mean Square Error [Steering angle$^2$]')
     plt.plot(hist['epoch'], hist['mean_squared_error'], label='Train Error')
-    # plt.plot(hist['epoch'], hist['val_mean_squared_error'], label='Val Error')
+    plt.plot(hist['epoch'], hist['val_mean_squared_error'], label='Val Error')
     plt.legend()
-
-    """ Plot the validation MAE and MSE progress with matplotlib. """
-
-    """ Validation MAE """
-
-    plt.subplots_adjust(wspace=0.3)
-    plt.subplot(2, 2, 3)
-    plt.xlabel('Batch')
-    plt.ylabel('Validation Mean Abs Error [Steering angle$^2$]')
-    plt.plot(hist['epoch'], hist['val_mean_absolute_error'], label='Validation Error')
-    plt.legend()
-
-    """ Validation MSE """
-
-    plt.subplots_adjust(wspace=0.3)
-    plt.subplot(2, 2, 4)
-    plt.xlabel('Batch')
-    plt.ylabel('Validation Mean Square Error [Steering angle$^2$]')
-    plt.plot(hist['epoch'], hist['val_mean_squared_error'], label='Validation Error')
-    plt.legend()
-
     plt.show()
 
 
@@ -185,7 +158,8 @@ if __name__ == '__main__':
 
     MODEL = create_model() if ARGS.c else load_model('model.h5')
     DRV_LOG = read_driving_log('driving_log.csv')
-    train_model(MODEL, DRV_LOG)
+    VAL_LOG = read_driving_log('validation_log.csv')
+    train_model(MODEL, train_frame=DRV_LOG, valid_frame=VAL_LOG)
 
     HISTORY = pd.read_csv('model_history_log.csv')
     plot_history(HISTORY)
