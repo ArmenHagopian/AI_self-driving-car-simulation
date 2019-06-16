@@ -1,22 +1,23 @@
 #!/usr/local/bin/python3
 """ Connects to the simulator and runs the model """
-import io
 import base64
-import socketio
+import io
+
 import eventlet
 import numpy as np
+import socketio
+from keras.applications.vgg16 import preprocess_input
+from keras.models import load_model
+from keras.preprocessing.image import img_to_array
 from PIL import Image
 from simple_pid import PID
-from keras.models import load_model
-from keras.applications.vgg16 import preprocess_input
-from keras.preprocessing.image import img_to_array
 
 # Handle to connect to the simulator
 SIO = socketio.Server()
 # ML handle to predict the steering
 MODEL = None
 # Speed control with PID controller
-REGUL = PID(1, 0.7, 0, setpoint=15, output_limits=(0, 1))
+REGUL = PID(1, 0.7, 0, setpoint=30, output_limits=(0, 1))
 
 
 @SIO.on('telemetry')
@@ -24,9 +25,8 @@ def telemetry(_, data):
     """ Event sent by the simulator. """
     def preprocess(image):
         """
-        First, convert the image from a PIL object to a numpy array.
-        Crop the sky from the image by removing the top 60px and then use the
-        VGG16 preprocess method to distribute the inputs between [-1.0;1.0].
+        First, convert the image from a PIL object to a numpy
+        array, then distribute the inputs between [-1.0;1.0].
         """
         img = img_to_array(image)
         return preprocess_input(img, mode='tf', data_format='channels_last')
