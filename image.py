@@ -157,7 +157,7 @@ if __name__ == '__main__':
     ARGS = PARSER.parse_args()
 
     MODEL = create_model() if ARGS.c else load_model('model.h5')
-    DRV_LOG = read_driving_log('driving_log.csv')
+    DRV_LOG = read_driving_log('driving_log.csv', one_of_five=True)
     VAL_LOG = read_driving_log('validation_log.csv')
     train_model(MODEL, train_frame=DRV_LOG, valid_frame=VAL_LOG)
 
