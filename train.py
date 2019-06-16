@@ -1,6 +1,6 @@
 #!/usr/local/bin/python3
 """
-image.py -- Convolutional Neural Network trainer for self-driving cars.
+train.py -- Convolutional Neural Network trainer for self-driving cars.
 Copyright (C) 2019  Alexis Nootens & Armen Hagopian
 
 Licensed under the EUPL 1.2
