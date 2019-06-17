@@ -18,12 +18,9 @@ The ``train.py`` file is used to create and/or train the model.
 You can either train a new model using the `-c` argument or train an existing one.
 File names such as model file or driving log cannot be passed as argument.
 
-> train.py always looks for the model file "model.h5".
->
-> If the file exists and -c is not used, the model will be retrained.
->
-> If the file doesn't exist and -c is used, the file will be created.
->
+> train.py always looks for the model file "model.h5".<br>
+> If the file exists and -c is not used, the model will be retrained.<br>
+> If the file doesn't exist and -c is used, the file will be created.<br>
 > No warranty is provided otherwise.
 
 ## How to train a model
