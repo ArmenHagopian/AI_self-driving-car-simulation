@@ -19,11 +19,11 @@ You can either train a new model using the `-c` argument or train an existing on
 File names such as model file or driving log cannot be passed as argument.
 
 > train.py always looks for the model file "model.h5".
-
+>
 > If the file exists and -c is not used, the model will be retrained.
-
+>
 > If the file doesn't exist and -c is used, the file will be created.
-
+>
 > No warranty is provided otherwise.
 
 ## How to train a model
@@ -54,9 +54,7 @@ Then launch the simulator and select "autonomous mode".
 
 ## Model provided
 A pre-trained model is provided in the repo.
-
 This model has been trained for 200 epochs of 8000 images.
-
 It can be used to immediately evaluate the architecture.
 
 ## Requirements
