@@ -111,7 +111,7 @@ def train_model(model, train_frame, valid_frame):
     csv_logger = CSVLogger('model_history_log.csv')
     images_gen = TrackGenerator(train_frame, preprocess, batch_size)
     valids_gen = TrackGenerator(valid_frame, preprocess, batch_size)
-    model.fit_generator(generator=images_gen, epochs=15,
+    model.fit_generator(generator=images_gen, epochs=200,
                         validation_steps=batch_size,
                         validation_data=valids_gen,
                         workers=20, max_queue_size=500,
