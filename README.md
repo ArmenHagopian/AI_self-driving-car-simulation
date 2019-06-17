@@ -69,5 +69,12 @@ Use `pip install -r requirements.txt` for fast install
 - tensorflow >= 1.13.1
 - simple-pid >= 0.2.1
 
+## Repository structure
+
+The files described above, i.e., "train.py", "drive.py", "model.h5" and "requirements.txt" are in the root of the repository. 
+The "/architecture" directory contains two files named "CNN_architecture.pdf" and "PlotNeuralNet_architecture.png" containing drawings of the architecture of the implemented convolutional neural network.
+
 ## References
  - Bojarski, Mariusz, et al. "End to end learning for self-driving cars." arXiv preprint arXiv:1604.07316 (2016).
+ - N. Srivastava, G. Hinton, A. Krizhevsky, I. Sutskever, and R. Salakhutdinov, “Dropout: A Simple Way to Prevent Neural Networks from Overﬁtting,” p. 30 (2014).
+
