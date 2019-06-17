@@ -1,41 +1,71 @@
-# AI_self-driving-car-simulation
+# Self-Driving Car Training
+Convolutional Neural Network model for the (https://github.com/udacity/self-driving-car-sim)[Udacity Self-Driving car simulator].
+Contains the model, the training script, and the launching script.
 
-## Files and directories of the repository
-
-The "train.py" file is used to create and/or train the model. Indeed, you can either create and train a new model by executing the python file using the following:
 
 ```
-python train.py -c
+usage: train.py [-h] [-c]
+
+Train a self-driving car.
+
+optional arguments:
+  -h, --help  show this help message and exit
+  -c          Create a new model
 ```
 
-or you can load an existing model file named "model.h5". In this case, the "train.py" will train the existing model once again.
+The ``train.py`` file is used to create and/or train the model.
+You can either train a new model using the `-c` argument or train an existing one.
+File names such as model file or driving log cannot be passed as argument.
 
-A model generated using 200 epochs and also named "model.h5" is in this repository. It can be directly used in a simulation as explained in the next section.
+> train.py always looks for the model file "model.h5".
+> If the file exists and -c is not used, the model will be retrained.
+> If the file doesn't exist and -c is used, the file will be created.
+> No warranty is provided otherwise.
 
-When launched, this "train.py" file also generates a plot of the mean absolute error and the mean squared error of the validation and the test phases of the model. Moreover, the plot is based on a file named "model_history_log.csv" and generated during the training.
+## How to train a model
+Two files are required:
+- driving_log.csv
+- validation_log.csv
+Both are the same type of file and are generated from the simulator in training mode.
+driving_log is the training set and validation_log.csv the test/validation set.
+Both files must be in the same directory as the training script `train.py`.
+Ensure the image files referenced by the logs are located in the subdirectory `IMG/` of the logs files.
 
-Furthermore, in order to train the model, a "driving_log.csv" file is needed. The latter must contain the paths to the left, center, and right cameras images as well as the measured steering angle, throttle, brake and speed related to the images. These data have been created in the training mode of the Udacity simulator.
-
-Another set of data called the validation data is also mandatory. It needs to have the same structure as the "driving_log.csv" but in a file named "validation_log.csv" and containing data that will be used for the validation phase of the model.
-
-Lastly, an important thing is that all these csv files must be in the same directory as the "train.py" file.
-
-## How to run the simulation ?
-
-Once the model has been created and trained, you need to execute the "drive.py" file to run the model. An important thing here is that the file containing the model must be named "model.h5" and be in the same directory as "drive.py". The python file can then be run:
-
+Simply launch the training script
 ```
-python drive.py
+python3 train.py [-c]
 ```
+The model file "model.h5" will be saved in the script directory and a
+training history log file will be produced named model_history_log.csv.
 
-By choosing the autonomous mode in the simulator, you will be able to get the car to drive by itself based on the aforementioned trained model.
+## How to run a model
+Ensure the model file "model.h5" is located in the same directory as the running script drive.py.
 
+Simply launch the running script
+```
+python3 drive.py
+```
+Then launch the simulator and select "autonomous mode".
 
-## Algorithms and libraires used
+## Model provided
+A pre-trained model is provided in the repo.
+This model has been trained for 200 epochs of 8000 images.
+It can be used to immediately evaluate the architecture.
 
-The programming language used for this project is Python.
-The neural network has been implemented using Keras API that runs on top of TensorFlow (we used 1.13.1 version).
-In order to launch the simulator based on the created model, a socketIO server has to be created. Therefore, the python-socketio (4.0.2) library has been used.
-The intelligence implemented controls the steering wheel angle but not the throttle nor the brake. Thus, a PID control has been used for the speed of the car with simple_pid library.
-The pandas library has been used to manipulate the csv files containing the training and validation data.
-The NumPy, Evenlet, Matplotlib and PIL (for image processing) libraries have also been used.
+## Requirements
+Built on python 3.7.3
+Use `pip install -r requirements.txt` for fast install
+
+- eventlet >= 0.24.1
+- Keras >= 2.2.4
+- matplotlib >= 3.1.0
+- numpy >= 1.16.3
+- pandas >= 0.24.2
+- Pillow >= 6.0.0
+- scikit-learn >= 0.21.1
+- scipy >= 1.3.0
+- simple-pid >= 0.2.1
+- tensorflow >= 1.13.1
+
+## References
+ - Bojarski, Mariusz, et al. "End to end learning for self-driving cars." arXiv preprint arXiv:1604.07316 (2016).
