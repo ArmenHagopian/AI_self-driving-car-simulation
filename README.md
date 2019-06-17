@@ -1,6 +1,5 @@
 # Self-Driving Car Training
-Convolutional Neural Network model for the [Udacity Self-Driving car simulator](https://github.com/udacity/self-driving-car-sim).
-
+Convolutional Neural Network model for the [Udacity Self-Driving car simulator](https://github.com/udacity/self-driving-car-sim).<br>
 Contains the model, the training script, and the launching script.
 
 
@@ -14,8 +13,8 @@ optional arguments:
   -c          Create a new model
 ```
 
-The ``train.py`` file is used to create and/or train the model.
-You can either train a new model using the `-c` argument or train an existing one.
+The ``train.py`` file is used to create and/or train the model.<br>
+You can either train a new model using the `-c` argument or train an existing one.<br>
 File names such as model file or driving log cannot be passed as argument.
 
 > train.py always looks for the model file "model.h5".<br>
@@ -37,8 +36,8 @@ Simply launch the training script
 ```
 python3 train.py [-c]
 ```
-The model file "model.h5" will be saved in the script directory and a
-training history log file will be produced named model_history_log.csv
+The model file "model.h5" will be saved in the script directory.<br>
+A training history log file will be produced named "model_history_log.csv"
 
 ## How to run a model
 Ensure the model file "model.h5" is located in the same directory as the running script drive.py
