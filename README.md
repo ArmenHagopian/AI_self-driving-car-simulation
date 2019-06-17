@@ -59,17 +59,15 @@ It can be used to immediately evaluate the architecture.
 Built on python 3.7.3
 
 Use `pip install -r requirements.txt` for fast install
-
 - eventlet >= 0.24.1
-- Keras >= 2.2.4
-- matplotlib >= 3.1.0
+- python-socketio >= 4.0.2
 - numpy >= 1.16.3
 - pandas >= 0.24.2
+- matplotlib >= 3.1.0
 - Pillow >= 6.0.0
-- scikit-learn >= 0.21.1
-- scipy >= 1.3.0
-- simple-pid >= 0.2.1
+- Keras >= 2.2.4
 - tensorflow >= 1.13.1
+- simple-pid >= 0.2.1
 
 ## References
  - Bojarski, Mariusz, et al. "End to end learning for self-driving cars." arXiv preprint arXiv:1604.07316 (2016).
