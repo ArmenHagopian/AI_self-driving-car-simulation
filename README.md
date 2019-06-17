@@ -2,6 +2,7 @@
 Convolutional Neural Network model for the [Udacity Self-Driving car simulator](https://github.com/udacity/self-driving-car-sim).<br>
 Contains the model, the training script, and the launching script.
 
+![](architecture/PlotNeuralNet_architecture.png)
 
 ```
 usage: train.py [-h] [-c]
@@ -12,8 +13,7 @@ optional arguments:
   -h, --help  show this help message and exit
   -c          Create a new model
 ```
-
-The ``train.py`` file is used to create and/or train the model.<br>
+The `train.py` file is used to create and/or train the model.<br>
 You can either train a new model using the `-c` argument or train an existing one.<br>
 File names such as model file or driving log cannot be passed as argument.
 
@@ -21,6 +21,8 @@ File names such as model file or driving log cannot be passed as argument.
 > If the file exists and -c is not used, the model will be retrained.<br>
 > If the file doesn't exist and -c is used, the file will be created.<br>
 > No warranty is provided otherwise.
+
+The `drive.py` file is used to launch the model and drive the car in the simulator.
 
 ## How to train a model
 Two files are required:
