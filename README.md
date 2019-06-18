@@ -1,4 +1,7 @@
 # Self-Driving Car Training
+
+Alexis Nootens & Armen Hagopian
+
 Convolutional Neural Network model for the [Udacity Self-Driving car simulator](https://github.com/udacity/self-driving-car-sim).<br>
 Contains the model, the training script, and the launching script.
 
